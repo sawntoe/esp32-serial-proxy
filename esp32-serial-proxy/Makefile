@@ -2,7 +2,7 @@ include .env
 build: clean build-sketch compile
 
 clean:
-	rm esp32-serial-proxy.ino
+	-rm esp32-serial-proxy.ino
 
 build-sketch:
 	@printf "#include <WiFi.h>\n\n" >> esp32-serial-proxy.ino
