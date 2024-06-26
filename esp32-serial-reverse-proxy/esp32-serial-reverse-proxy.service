@@ -1,0 +1,12 @@
+[Unit]
+Description=ESP32 Serial Proxy
+StartLimitIntervalSec=0
+
+[Service]
+type=simple
+User=root
+Restart=on-failure
+ExecStart=socat TCP-LISTEN:8085 TCP-LISTEN:8086,pty,setsid,ctty
+
+[Install]
+WantedBy=multi-user.target

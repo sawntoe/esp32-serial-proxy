@@ -1,0 +1,44 @@
+
+WiFiServer server(1024); 
+WiFiClient client;
+
+void setup() 
+{
+    Serial.begin(115200);
+    WiFi.mode(WIFI_STA);
+    WiFi.begin(SSID, PASSWORD);
+    while(WiFi.status() != WL_CONNECTED)
+    {
+        Serial.print(".");
+        delay(100);
+    }
+    Serial.print("\n");
+    delay(1000);
+    server.begin(); 
+    Serial.println(WiFi.localIP());
+}
+
+void loop()
+{
+    client = server.available();
+    if(!client)
+    {
+        return;
+    }
+
+    while (client.connected())
+    {
+        if (client.available())
+        {
+            char c = client.read();
+            Serial.write(c);
+        }
+        if (Serial.available())
+        {
+            char c = Serial.read();
+            client.write(c);
+        }
+    }
+    client.stop();
+}
+

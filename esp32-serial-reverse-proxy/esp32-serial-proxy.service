@@ -1,0 +1,13 @@
+[Unit]
+Description=ESP32 Serial Proxy
+StartLimitIntervalSec=0
+
+[Service]
+type=simple
+User=root
+Restart=on-failure
+ExecStartPre=stty -F /dev/ttyACM0 115200
+ExecStart=socat EXEC:"bash -i",pty,stderr,setsid,sane /dev/ttyACM0,b115200,pty,ctty
+
+[Install]
+WantedBy=multi-user.target
